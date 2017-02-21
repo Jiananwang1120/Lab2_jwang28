@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -58,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
 //create a bundle object using the following:
 //Bundle bundle = new Bundle();
                 intent.putExtra("team", schedule.get(position)); // where al is your ArrayList holding team information.
+               // String[] matchItem = getItem(position);
+                //TextView date = (TextView) findViewById(R.id.date);
+                //TextView info = (TextView) findViewById(R.id.info);
+                //TextView score = (TextView) findViewById(R.id.score);
+
                 startActivity(intent);
 //start the activity using the intent with the bundle you just created.
 
