@@ -1,0 +1,8 @@
+fsl,Forida State   Feb 11,Saturday February 11 6:00PM,Purcell Pavilion at the Joyce Center Notre Dame Indiana,Florida State,Seminoles,(21-5),72-84,Notre Dame,Fighting Irish,(19-7),fsl,ndl
+bcl,Boston College   Feb 14,Tuesday February 14 7:00PM,Silvio O. Conte Forum Chestnut Hill Massachusetts,Notre Dame,Fighting Irish,(20-7),84-76,Boston College,Eagles,(9-18),ndl,bcl
+ncl,North Carolina State   Feb 18,Saturday February 18 12:00PM,PNC Arena,Raleigh,North Carolina,Notre Dame,Fighting Irish,(21-7),81-72,North Carolina State,Wolfpack,(14-14),ndl,ncl
+gtl,Georgia Tech   Feb 26,Sunday February 26 6:30PM,Purcell Pavilion at the Joyce Center Notre Dame Indiana,Georgia Tech,Yellow Jackets,(16-11),,Notre Dame,Fighting Irish,(21-7),gtl,ndl
+bcl,Boston College   March 1,Wednesday March 1 8:00PM,Purcell Pavilion at the Joyce Center Notre Dame Indiana,Boston College,Eagles,(9-19),,Notre Dame,Fighting Irish,(21-7),bcl,ndl
+lvl,Louisville   March 4,Saturday March 4 2:00PM,KFC yum! Center Louisville Kentucky,Notre Dame,Fighting Irish,(21-7),,Louisville,Cardinals,(22-5),ndl,lvl
+accl,ACC Tournament    March 7,,,,,,,,,,ndl,acc
+ncaal,NCAA Tournament   March 16,,,,,,,,,,ndl,ncaal

@@ -10,21 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ScheduleAdapter extends ArrayAdapter<String[]> {
-    ScheduleAdapter (Context context, ArrayList<String[]> schedule) {
-        super(context, R.layout.schedule_item, schedule);
+public class ScheduleAdapter extends ArrayAdapter<Team> {
+
+    ScheduleAdapter (Context context, ArrayList<Team> teams) {
+        super(context, R.layout.schedule_item, (ArrayList<Team>) teams);
     }
     public View getView (int position, View convertView, ViewGroup parent) {
         LayoutInflater scheduleInflater = LayoutInflater.from(getContext());
         View scheduleView = scheduleInflater.inflate(R.layout.schedule_item, parent, false);
 
-        String[] matchItem = getItem(position);
+        Team team = getItem(position);
         TextView teamName = (TextView) scheduleView.findViewById(R.id.scheduleText);
         ImageView teamLogo = (ImageView) scheduleView.findViewById(R.id.teamLogo);
-        String mDrawableName = matchItem[0];
-        teamName.setText(matchItem[1]);
-        int resID = getContext().getResources().getIdentifier(mDrawableName , "drawable", getPackageName());
+        String mDrawableName = team.getTeamLogo();
+
+        teamName.setText(team.getTeamName());
+        int resID = getContext().getResources().getIdentifier(String.valueOf(mDrawableName), "drawable", getPackageName());
         teamLogo.setImageResource(resID );
         return scheduleView;
     }
