@@ -6,4 +6,11 @@
     <color name="colorNavy">#000080</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorYellow">#FFFF00</color>
+    <color name="colorPrimaryMaterial">#57a3ba</color>
+    <color name="colorPrimaryDarkMaterial">#354a76</color>
+    <color name="colorAccentMaterial">#27b1f0</color>
+    <color name="colorTextprimary">#2a2056</color>
+    <color name="colorTextsecondary">#471945</color>
+    <color name="colorBackground">#abd7d7</color>
+
 </resources>
