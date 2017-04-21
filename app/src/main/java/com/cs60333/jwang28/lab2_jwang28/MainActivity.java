@@ -1,12 +1,8 @@
 package com.cs60333.jwang28.lab2_jwang28;
 
-import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.os.Parcelable;
+import android.database.Cursor;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,30 +14,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+import android.widget.SimpleCursorAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Team> teams;
-    DBHelper dbHelper = new DBHelper(this.getApplicationContext());
+    DBHelper dbHelper;
 
     CoordinatorLayout coordinatorLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbHelper = new DBHelper(this.getApplicationContext());
+        dbHelper.onUpgrade(dbHelper.getWritableDatabase(), 1, 2);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -50,37 +42,76 @@ public class MainActivity extends AppCompatActivity {
         //ArrayList<String[]> teamInfo = call readcsv funtion of the csvobject
         int resID = getResources().getIdentifier("schedule", "raw", getPackageName());
         ArrayList<String[]> teamInfo = csvReader.readCsvFile(resID);
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(dbHelper.COL_NAME, String.valueOf(teamInfo));
-        dbHelper.insertData("Team", contentValues);
+      //  contentValues.put(dbHelper.COL_DATE, );
+
 
         //for loop to iterate over teamInfo to create ArrayList teams
 
         teams = new ArrayList<>();
         for (int i = 0; i < teamInfo.size(); i++) {
             String[] str = teamInfo.get(i);
-            Team team = new Team(str);
-            teams.add(team);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DBHelper.COL_LOGO, String.valueOf(str[0]));
+            contentValues.put(DBHelper.COL_NAME, String.valueOf(str[1]));
+            contentValues.put(DBHelper.COL_DATE, String.valueOf(str[2]));
+            contentValues.put(DBHelper.COL_PLACE, String.valueOf(str[3]));
+            contentValues.put(DBHelper.COL_LT, String.valueOf(str[4]));
+            contentValues.put(DBHelper.COL_LN, String.valueOf(str[5]));
+            contentValues.put(DBHelper.COL_LS, String.valueOf(str[6]));
+            contentValues.put(DBHelper.COL_SCORE, String.valueOf(str[7]));
+            contentValues.put(DBHelper.COL_RT, String.valueOf(str[8]));
+            contentValues.put(DBHelper.COL_RN, String.valueOf(str[9]));
+            contentValues.put(DBHelper.COL_RS, String.valueOf(str[10]));
+            contentValues.put(DBHelper.COL_LTL, String.valueOf(str[11]));
+            contentValues.put(DBHelper.COL_RTL, String.valueOf(str[12]));
+            dbHelper.insertData("Team", contentValues);
         }
 
+        String[] fields = dbHelper.getTableFields("Team");
+        Cursor cursor = dbHelper.getAllEntries("Team", fields);
+        int[] item_ids = new int[] {R.id.florida, R.id.nd, R.id.date, R.id.info, R.id.textView7, R.id.score};
+        SimpleCursorAdapter teamCursor;
+        teamCursor = new SimpleCursorAdapter(this, R.layout.schedule_item, cursor, fields, item_ids, 0);
+
+        Cursor cursor1 = dbHelper.getAllEntries("Team", dbHelper.getTableFields("Team"));
+
+        if(cursor1 != null) {
+            cursor1.moveToFirst();
+            do {
+                String[] str = new String[]{
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_LOGO)),
+                    cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_NAME)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_DATE)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_PLACE)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_LT)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_LN)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_LS)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_SCORE)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_RT)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_RN)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_RS)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_LTL)),
+                        cursor1.getString(cursor1.getColumnIndex(DBHelper.COL_RTL))};
+
+                teams.add(new Team(cursor1.getInt(cursor1.getColumnIndex(DBHelper.COL_ID)), str));
+            } while(cursor1.moveToNext());
+        }
         ScheduleAdapter scheduleAdapter = (ScheduleAdapter) new ScheduleAdapter(this, teams);
         ListView scheduleListView = (ListView) findViewById(R.id.scheduleListView);
 
         scheduleListView.setAdapter(scheduleAdapter);
+//        scheduleListView.setAdapter(teamCursor);
 
-        AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        scheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra("team", teams.get(position)); // where al is your ArrayList holding team information.
-
+                intent.putExtra("team", teams.get(position));
                 startActivity(intent);
             }
+        });
 
-        };
-
-        scheduleListView.setOnItemClickListener(clickListener);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -169,6 +200,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-};
+}
 
 

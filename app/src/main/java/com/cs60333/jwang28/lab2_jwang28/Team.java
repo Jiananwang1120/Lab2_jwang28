@@ -20,8 +20,9 @@ public class Team implements Serializable {
     String rightTeam;
     String rightNick;
     String rightScore;
+    int teamID;
     // define all the strings that you need to fill all the TextViews  of activity_detail.
-    public Team (String[] teaminfo) {
+    public Team (int id, String[] teaminfo) {
         setTeamName(teaminfo[1]);
        /// setTeamName(right_team_name);
         setTeamLogo(teaminfo[0]);
@@ -37,9 +38,13 @@ public class Team implements Serializable {
         setRscore(teaminfo[10]);
        /// setTeamLogo(right_team_logo);
         setScore(teaminfo[7]);
-       // setGameDate(teaminfo[]);
+       // setGameDate(teaminfo[])
+        setTeamID(id);
 
     }
+    public void setTeamID(int ID) {this.teamID = ID;}
+
+    public int getID() {return this.teamID;}
 
     public void setTeamName(String team_name) {
         this.teamName = team_name;
@@ -135,4 +140,6 @@ public class Team implements Serializable {
     public String getRscore() {
         return this.rightScore;
     }
+
+
 }

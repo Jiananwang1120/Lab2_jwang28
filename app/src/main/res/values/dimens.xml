@@ -8,4 +8,6 @@
     <dimen name="camera_width">156dp</dimen>
     <dimen name="camera_margin">135dp</dimen>
     <dimen name="image_width">10dp</dimen>
+    <dimen name="text_size">12sp</dimen>
+    <dimen name="image_size">150dp</dimen>
 </resources>
